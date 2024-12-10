@@ -8,7 +8,7 @@ const PORT = 8080;
 app.use(express.json());
 
 app.get('/config', (req,res) => {
-
+    console.log(req.body);
     res.status(200).send({
         config:'A',
     })
