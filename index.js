@@ -1,9 +1,9 @@
-const config = require('./config.json');
-
+//const config = require('./config.json');
+require('dotenv').config()
 
 const express = require('express');
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 const discord = require('discord.js');
 
@@ -102,7 +102,7 @@ discordclient.once(discord.Events.ClientReady, readyClient => {
       })
     
 });
-discordclient.login(config.discord.token);
+discordclient.login(DISCORDTOKEN);
 
 discordclient.on("messageCreate", async (message) => {
     if(!message.author.bot){
