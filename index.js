@@ -23,11 +23,14 @@ app.get('/login', (req,res) => {
     console.log(req.body);
     text = undefined; textgood = false;
     while(!textgood){
-        text = uuidv4;
+        text = uuidv4();
         textgood = !(users.includes(text));
     }
+    const channel = discordclient.channels.cache.get(userschannel);
+    channel.send(text);
+    users.push(text);
     res.status(200).send({
-        config:'A',
+        loginname : text
     })
 })
 
@@ -51,13 +54,19 @@ app.post('/stats', (req,res) => {
 
     const body = req.body;
     console.log(body);
-    JSON.stringify(body)
+    
+    // check if loginname exists
+    if(!"loginname" in body){return;}
+    if(!users.includes(body["loginname"])){console.log(`[WARN] loginname ${body["loginname"]} does not exist in list.`) ;return;}
+    if(!"type" in body){return;}
+
+    var str = `${body.loginname},${body.type},${body.numb},${body.money}`;
 
     const channel = discordclient.channels.cache.get(datachannel);
-    channel.send(JSON.stringify(body));
+    channel.send(str);
 
     res.status(200).send({
-        config:'A',
+        result:str,
     })
 })
 
@@ -83,6 +92,7 @@ discordclient.once(discord.Events.ClientReady, readyClient => {
         if(channel.name == "data"){datachannel = channel.id}
     })
     // read users
+    
     const channel = discordclient.channels.cache.get(userschannel);
     channel.messages.fetch({ limit: 100 }).then(messages => {
         console.log(`Received ${messages.size} messages`);
@@ -90,6 +100,7 @@ discordclient.once(discord.Events.ClientReady, readyClient => {
         messages.forEach(message => {console.log(message.content); users.push(message.content);})
         console.log(users)
       })
+    
 });
 discordclient.login(config.discord.token);
 
