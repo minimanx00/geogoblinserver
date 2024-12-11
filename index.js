@@ -102,7 +102,7 @@ discordclient.once(discord.Events.ClientReady, readyClient => {
       })
     
 });
-discordclient.login(DISCORDTOKEN);
+discordclient.login(process.env.DISCORDTOKEN);
 
 discordclient.on("messageCreate", async (message) => {
     if(!message.author.bot){
