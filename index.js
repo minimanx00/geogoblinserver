@@ -12,6 +12,13 @@ const { v4: uuidv4 } = require('uuid');
 
 app.use(express.json());
 
+app.get('/ping', (req,res) => {
+    console.log(req.body);
+    res.status(200).send({
+        ping:'pong',
+    })
+})
+
 app.get('/config', (req,res) => {
     console.log(req.body);
     res.status(200).send({
