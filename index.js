@@ -13,21 +13,29 @@ const { v4: uuidv4 } = require('uuid');
 app.use(express.json());
 
 app.get('/ping', (req,res) => {
-    console.log(req.body);
     res.status(200).send({
         ping:'pong',
     })
 })
 
-app.get('/config', (req,res) => {
-    console.log(req.body);
+app.get('/config/:id', (req,res) => {
+    const { id } = req.params;
+
+    let duplicateArray = [].concat(users).reverse();
+    var ind = duplicateArray.indexOf(id);
+    var config = "C";
+    if(ind!=-1){
+        var choices = ["A","B"];
+        var nind = ind % 2;
+        config = choices[nind];
+    }
+
     res.status(200).send({
-        config:'A',
+        config,
     })
 })
 
 app.get('/login', (req,res) => {
-    console.log(req.body);
     text = undefined; textgood = false;
     while(!textgood){
         text = uuidv4();
@@ -41,7 +49,7 @@ app.get('/login', (req,res) => {
     })
 })
 
-uuidv4
+
 
 /*
 app.post('/stats/:id', (req,res) => {
