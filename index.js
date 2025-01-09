@@ -29,7 +29,7 @@ app.get('/config/:id', (req,res) => {
         var nind = ind % 2;
         config = choices[nind];
     }
-
+    console.log(`Sent config ${config} to ${id}`)
     res.status(200).send({
         config,
     })
