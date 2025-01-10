@@ -75,7 +75,7 @@ app.post('/stats', (req,res) => {
     if(!users.includes(body["loginname"])){console.log(`[WARN] loginname ${body["loginname"]} does not exist in list.`) ;return;}
     if(!"type" in body){return;}
 
-    var str = `${body.loginname},${body.type},${body.numb},${body.money}`;
+    var str = `${body.loginname},${body.type},${body.numb},${body.money},${body.upgradetime}`;
 
     const channel = discordclient.channels.cache.get(datachannel);
     channel.send(str);
