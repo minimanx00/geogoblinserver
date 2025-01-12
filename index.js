@@ -75,6 +75,8 @@ app.post('/stats', (req,res) => {
     if(!"loginname" in body){return;}
     if(!users.includes(body["loginname"])){console.log(`[WARN] loginname ${body["loginname"]} does not exist in list.`) ;return;}
     if(!"type" in body){return;}
+    if(!"version" in body){return;}
+    if(!(body.version === gameconfig.version)){console.log(`[VERSION MISMATCH] ${body["loginname"]}`);return;}
 
     var str = `${body.loginname},${body.type},${body.numb},${body.money},${body.upgradetime},${body.session}`;
 
