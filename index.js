@@ -9,6 +9,7 @@ const discord = require('discord.js');
 
 const { v4: uuidv4 } = require('uuid');
 
+const gameconfig = require('./gameconfig.json');
 
 app.use(express.json());
 
@@ -23,16 +24,16 @@ app.get('/config/:id', (req,res) => {
 
     let duplicateArray = [].concat(users).reverse();
     var ind = duplicateArray.indexOf(id);
+    var configobject = JSON.parse(JSON.stringify(gameconfig));
     var config = "C";
     if(ind!=-1){
         var choices = ["A","B"];
         var nind = ind % 2;
         config = choices[nind];
     }
+    configobject.config = config;
     console.log(`Sent config ${config} to ${id}`)
-    res.status(200).send({
-        config,
-    })
+    res.status(200).send(configobject)
 })
 
 app.get('/login', (req,res) => {
