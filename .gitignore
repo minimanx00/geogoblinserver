@@ -2,6 +2,7 @@
 firebaseaccountkey.json
 discordconfig.json
 config.json
+results/
 
 # Logs
 logs
